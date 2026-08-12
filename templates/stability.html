@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container-xxl py-5">
+  <div class="d-flex align-items-end justify-content-between flex-wrap gap-3 mb-4">
+    <div>
+      <div class="section-label">Stability prediction</div>
+      <h2 class="section-title mt-2 mb-0">Interpretable mutation impact cards</h2>
+    </div>
+    <div class="legend-pill">ΔΔG, confidence, and stability score overview</div>
+  </div>
+  <div class="row g-4">
+    {% for item in stability %}
+    <div class="col-md-6 col-xl-4">
+      <div class="glass-card stability-card h-100">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div>
+            <div class="card-kicker">Mutation</div>
+            <h3 class="h4 mb-0">{{ item.mutation }}</h3>
+          </div>
+          <span class="status-badge {{ 'danger' if item.prediction == 'Decrease Stability' else 'success' if item.prediction == 'Increase Stability' else 'neutral' }}">
+            {{ item.prediction }}
+          </span>
+        </div>
+        <div class="gauge-wrap mb-4">
+          <div class="stability-gauge" style="--gauge-value: {{ item.confidence_score }}%;">
+            <div class="stability-gauge-inner">
+              <strong>{{ item.confidence_score }}%</strong>
+              <span>Confidence</span>
+            </div>
+          </div>
+        </div>
+        <div class="row g-3">
+          <div class="col-6"><div class="metric-box"><span>ΔΔG</span><strong>{{ item.delta_g }}</strong></div></div>
+          <div class="col-6"><div class="metric-box"><span>Stability Score</span><strong>{{ item.stability_score }}</strong></div></div>
+        </div>
+        <div class="progress mt-4">
+          <div class="progress-bar {{ 'bg-danger' if item.prediction == 'Decrease Stability' else 'bg-success' if item.prediction == 'Increase Stability' else 'bg-info' }}" style="width: {{ item.stability_score }}%"></div>
+        </div>
+        <div class="small text-secondary mt-3">Reported on {{ item.reported_on }}</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

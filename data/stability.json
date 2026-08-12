@@ -1,0 +1,50 @@
+[
+  {
+    "mutation": "E6V",
+    "delta_g": -1.8,
+    "prediction": "Decrease Stability",
+    "confidence_score": 96,
+    "stability_score": 24,
+    "reported_on": "2026-06-01"
+  },
+  {
+    "mutation": "E121K",
+    "delta_g": -0.9,
+    "prediction": "Decrease Stability",
+    "confidence_score": 88,
+    "stability_score": 38,
+    "reported_on": "2026-06-08"
+  },
+  {
+    "mutation": "G16D",
+    "delta_g": 0.2,
+    "prediction": "Neutral",
+    "confidence_score": 79,
+    "stability_score": 63,
+    "reported_on": "2026-06-15"
+  },
+  {
+    "mutation": "K17N",
+    "delta_g": 0.5,
+    "prediction": "Increase Stability",
+    "confidence_score": 74,
+    "stability_score": 69,
+    "reported_on": "2026-06-22"
+  },
+  {
+    "mutation": "P36R",
+    "delta_g": -1.2,
+    "prediction": "Decrease Stability",
+    "confidence_score": 91,
+    "stability_score": 31,
+    "reported_on": "2026-06-29"
+  },
+  {
+    "mutation": "A74T",
+    "delta_g": 0.8,
+    "prediction": "Increase Stability",
+    "confidence_score": 83,
+    "stability_score": 72,
+    "reported_on": "2026-07-06"
+  }
+]

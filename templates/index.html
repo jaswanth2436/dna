@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero-section position-relative overflow-hidden">
+  <div class="dna-bg"></div>
+  <div class="container-xxl position-relative py-5 py-lg-6">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-7">
+        <span class="eyebrow">Biomedical research dashboard</span>
+        <h1 class="display-4 fw-bold text-white mt-3 mb-3">Development of a Web-Based Dashboard for Mutation Analysis and Stability Prediction of the HBB Protein in Sickle Cell Disease</h1>
+        <p class="lead text-white-75 mb-4">A premium localhost analytics workspace for exploring HBB protein properties, mutation impact, and stability predictions with publication-quality visuals.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <a class="btn btn-primary btn-lg px-4" href="{{ url_for('dashboard_page') }}">Explore Dashboard</a>
+          <a class="btn btn-outline-light btn-lg px-4" href="{{ url_for('protein_page') }}">Protein Information</a>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="glass-card hero-visual p-4 p-lg-5">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <span class="pill">HBB protein illustration</span>
+            <span class="status-dot"></span>
+          </div>
+          <svg viewBox="0 0 420 420" class="hero-svg" role="img" aria-label="Stylized HBB protein helix illustration">
+            <defs>
+              <linearGradient id="helixGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+                <stop offset="0%" stop-color="#5bf0d0" />
+                <stop offset="50%" stop-color="#7b8cff" />
+                <stop offset="100%" stop-color="#a855f7" />
+              </linearGradient>
+            </defs>
+            <circle cx="210" cy="210" r="148" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" />
+            <path d="M95 205 C135 145, 185 145, 225 205 S315 265, 325 205" fill="none" stroke="url(#helixGradient)" stroke-width="14" stroke-linecap="round" />
+            <path d="M95 245 C135 185, 185 185, 225 245 S315 305, 325 245" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="10" stroke-linecap="round" />
+            <path d="M120 160 L160 290 M175 145 L220 305 M235 145 L280 305 M295 160 L335 290" stroke="rgba(91,240,208,0.9)" stroke-width="5" stroke-linecap="round" />
+            <circle cx="130" cy="170" r="8" fill="#5bf0d0" />
+            <circle cx="205" cy="255" r="8" fill="#7b8cff" />
+            <circle cx="285" cy="170" r="8" fill="#a855f7" />
+          </svg>
+          <div class="row g-3 mt-2">
+            <div class="col-6">
+              <div class="mini-stat glass-soft">
+                <span>Gene</span>
+                <strong>{{ protein.gene_name }}</strong>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="mini-stat glass-soft">
+                <span>Protein</span>
+                <strong>{{ protein.protein_name }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container-xxl py-5">
+  <div class="row g-4">
+    <div class="col-md-6 col-xl-3">
+      <div class="glass-card info-card stat-card animate-rise">
+        <div class="stat-label">Gene Name</div>
+        <div class="stat-value">{{ protein.gene_name }}</div>
+      </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+      <div class="glass-card info-card stat-card animate-rise delay-1">
+        <div class="stat-label">Protein Name</div>
+        <div class="stat-value">{{ protein.protein_name }}</div>
+      </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+      <div class="glass-card info-card stat-card animate-rise delay-2">
+        <div class="stat-label">Organism</div>
+        <div class="stat-value">{{ protein.organism }}</div>
+      </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+      <div class="glass-card info-card stat-card animate-rise delay-3">
+        <div class="stat-label">Disease</div>
+        <div class="stat-value">{{ protein.disease }}</div>
+      </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+      <div class="glass-card info-card stat-card animate-rise delay-4">
+        <div class="stat-label">UniProt ID</div>
+        <div class="stat-value">{{ protein.uniprot_id }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,56 @@
+[
+  {
+    "mutation": "E6V",
+    "position": 6,
+    "wild_amino_acid": "E",
+    "mutant_amino_acid": "V",
+    "clinical_significance": "Pathogenic",
+    "disease_association": "Sickle Cell Disease",
+    "prediction_status": "High Risk"
+  },
+  {
+    "mutation": "E121K",
+    "position": 121,
+    "wild_amino_acid": "E",
+    "mutant_amino_acid": "K",
+    "clinical_significance": "Likely Pathogenic",
+    "disease_association": "Hemoglobinopathy",
+    "prediction_status": "Moderate Risk"
+  },
+  {
+    "mutation": "G16D",
+    "position": 16,
+    "wild_amino_acid": "G",
+    "mutant_amino_acid": "D",
+    "clinical_significance": "Benign",
+    "disease_association": "No Known Association",
+    "prediction_status": "Low Risk"
+  },
+  {
+    "mutation": "K17N",
+    "position": 17,
+    "wild_amino_acid": "K",
+    "mutant_amino_acid": "N",
+    "clinical_significance": "Uncertain Significance",
+    "disease_association": "Hemoglobin Variant",
+    "prediction_status": "Review Required"
+  },
+  {
+    "mutation": "P36R",
+    "position": 36,
+    "wild_amino_acid": "P",
+    "mutant_amino_acid": "R",
+    "clinical_significance": "Pathogenic",
+    "disease_association": "Sickle Cell Disease",
+    "prediction_status": "High Risk"
+  },
+  {
+    "mutation": "A74T",
+    "position": 74,
+    "wild_amino_acid": "A",
+    "mutant_amino_acid": "T",
+    "clinical_significance": "Benign",
+    "disease_association": "Population Variant",
+    "prediction_status": "Low Risk"
+  }
+]

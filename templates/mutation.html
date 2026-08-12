@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container-xxl py-5">
+  <div class="glass-card p-4 p-lg-5">
+    <div class="d-flex flex-column flex-lg-row gap-3 justify-content-between align-items-lg-end mb-4">
+      <div>
+        <div class="section-label">Mutation analysis</div>
+        <h2 class="section-title mt-2 mb-0">Search and filter HBB mutations</h2>
+      </div>
+      <div class="mutation-controls d-flex flex-column flex-md-row gap-3">
+        <input class="form-control form-control-lg" id="mutationSearch" type="search" placeholder="Search mutation, disease, or significance">
+        <select class="form-select form-select-lg" id="positionFilter">
+          <option value="all">All positions</option>
+          <option value="1-20">1 - 20</option>
+          <option value="21-40">21 - 40</option>
+          <option value="41-80">41 - 80</option>
+          <option value="81+">81+</option>
+        </select>
+      </div>
+    </div>
+    <div class="table-responsive mutation-table-wrap">
+      <table class="table table-hover align-middle mutation-table mb-0">
+        <thead>
+          <tr>
+            <th>Mutation</th>
+            <th>Position</th>
+            <th>Wild Amino Acid</th>
+            <th>Mutant Amino Acid</th>
+            <th>Clinical Significance</th>
+            <th>Disease Association</th>
+            <th>Prediction Status</th>
+          </tr>
+        </thead>
+        <tbody id="mutationTableBody">
+          {% for item in mutations %}
+          <tr data-mutation="{{ item.mutation|lower }} {{ item.clinical_significance|lower }} {{ item.disease_association|lower }}" data-position="{{ item.position }}">
+            <td><strong>{{ item.mutation }}</strong></td>
+            <td>{{ item.position }}</td>
+            <td><span class="aa-pill wild">{{ item.wild_amino_acid }}</span></td>
+            <td><span class="aa-pill mutant">{{ item.mutant_amino_acid }}</span></td>
+            <td>
+              <span class="status-badge {{ 'danger' if 'pathogenic' in item.clinical_significance|lower else 'success' if 'benign' in item.clinical_significance|lower else 'warning' }}">
+                {{ item.clinical_significance }}
+              </span>
+            </td>
+            <td>{{ item.disease_association }}</td>
+            <td>{{ item.prediction_status }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div id="mutationEmptyState" class="empty-state d-none mt-4">
+      No mutations match the current search criteria.
+    </div>
+  </div>
+</section>
+{% endblock %}

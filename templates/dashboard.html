@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container-xxl py-5">
+  <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+    <div>
+      <div class="section-label">Interactive dashboard</div>
+      <h2 class="section-title mt-2 mb-0">Mutation and stability analytics</h2>
+    </div>
+    <div class="dashboard-meta">Live summary generated from local JSON and SQLite sources</div>
+  </div>
+
+  <div class="row g-4 mb-4">
+    <div class="col-md-6 col-xl-3"><div class="glass-card stat-card"><div class="stat-label">Total Mutations</div><div class="stat-value" data-counter="{{ dashboard.summary.total_mutations }}">0</div></div></div>
+    <div class="col-md-6 col-xl-3"><div class="glass-card stat-card"><div class="stat-label">Pathogenic Mutations</div><div class="stat-value" data-counter="{{ dashboard.summary.pathogenic_mutations }}">0</div></div></div>
+    <div class="col-md-6 col-xl-3"><div class="glass-card stat-card"><div class="stat-label">Benign Mutations</div><div class="stat-value" data-counter="{{ dashboard.summary.benign_mutations }}">0</div></div></div>
+    <div class="col-md-6 col-xl-3"><div class="glass-card stat-card"><div class="stat-label">Average Stability Score</div><div class="stat-value" data-counter="{{ dashboard.summary.average_stability_score }}">0</div></div></div>
+  </div>
+
+  <script id="dashboard-data" type="application/json">
+    {{ dashboard | tojson }}
+  </script>
+  <script>
+    (function(){
+      try {
+        var el = document.getElementById('dashboard-data');
+        window.dashboardData = el && el.textContent ? JSON.parse(el.textContent) : {};
+      } catch (e) {
+        window.dashboardData = {};
+        console && console.error && console.error('Failed to parse dashboard data', e);
+      }
+    })();
+  </script>
+
+  <div class="row g-4 mb-4">
+    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h3 class="chart-title">Mutation Frequency</h3><canvas id="mutationFrequencyChart" height="240"></canvas></div></div>
+    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h3 class="chart-title">Mutation Distribution</h3><canvas id="mutationDistributionChart" height="240"></canvas></div></div>
+    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h3 class="chart-title">Protein Stability</h3><canvas id="stabilityChart" height="240"></canvas></div></div>
+    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h3 class="chart-title">Clinical Significance</h3><canvas id="clinicalChart" height="240"></canvas></div></div>
+  </div>
+
+  <div class="row g-4 mb-4">
+    <div class="col-lg-7"><div class="glass-card chart-card h-100"><h3 class="chart-title">Heatmap</h3><div id="heatmapChart" class="plotly-box"></div></div></div>
+    <div class="col-lg-5"><div class="glass-card chart-card h-100"><h3 class="chart-title">Timeline</h3><div id="timelineChart" class="plotly-box"></div></div></div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-7">
+      <div class="glass-card p-4 h-100">
+        <h3 class="chart-title mb-3">Recent Mutations</h3>
+        <div class="table-responsive">
+          <table class="table table-sm table-hover align-middle recent-table mb-0">
+            <thead><tr><th>Mutation</th><th>Position</th><th>Significance</th><th>Prediction</th></tr></thead>
+            <tbody>
+              {% for item in dashboard.recent_mutations %}
+              <tr>
+                <td><strong>{{ item.mutation }}</strong></td>
+                <td>{{ item.position }}</td>
+                <td>{{ item.clinical_significance }}</td>
+                <td>{{ item.prediction_status }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="glass-card p-4 h-100">
+        <h3 class="chart-title mb-3">Summary</h3>
+        <div class="summary-stack">
+          <div class="summary-item"><span>Gene</span><strong>{{ dashboard.summary.gene_name }}</strong></div>
+          <div class="summary-item"><span>Protein</span><strong>{{ dashboard.summary.protein_name }}</strong></div>
+          <div class="summary-item"><span>Pathogenic ratio</span><strong>{{ dashboard.summary.pathogenic_mutations }}/{{ dashboard.summary.total_mutations }}</strong></div>
+          <div class="summary-item"><span>Stability focus</span><strong>Confidence-led interpretation</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

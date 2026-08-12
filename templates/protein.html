@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container-xxl py-5">
+  <div class="row g-4 align-items-stretch">
+    <div class="col-lg-7">
+      <div class="glass-card p-4 p-lg-5 h-100">
+        <div class="section-label">Protein information</div>
+        <h2 class="section-title mt-2">{{ protein.protein_name }}</h2>
+        <div class="row g-3 mt-4">
+          <div class="col-md-6"><div class="detail-item"><span>Gene Name</span><strong>{{ protein.gene_name }}</strong></div></div>
+          <div class="col-md-6"><div class="detail-item"><span>Organism</span><strong>{{ protein.organism }}</strong></div></div>
+          <div class="col-md-6"><div class="detail-item"><span>UniProt ID</span><strong>{{ protein.uniprot_id }}</strong></div></div>
+          <div class="col-md-6"><div class="detail-item"><span>Protein Length</span><strong>{{ protein.protein_length }} aa</strong></div></div>
+          <div class="col-md-6"><div class="detail-item"><span>Molecular Weight</span><strong>{{ protein.molecular_weight }} Da</strong></div></div>
+          <div class="col-md-6"><div class="detail-item"><span>PDB Structure ID</span><strong>{{ protein.pdb_structure_id }}</strong></div></div>
+        </div>
+        <div class="mt-4">
+          <div class="subsection-heading">Function</div>
+          <p class="text-secondary-emphasis mb-0">{{ protein.function }}</p>
+        </div>
+        <div class="mt-4">
+          <div class="subsection-heading">Sequence</div>
+          <pre class="sequence-box">{{ protein.sequence }}</pre>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="glass-card p-4 p-lg-5 h-100 protein-image-card">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <span class="pill">Protein image</span>
+          <span class="status-dot"></span>
+        </div>
+        <svg viewBox="0 0 480 420" class="protein-svg" role="img" aria-label="Stylized protein structure illustration">
+          <defs>
+            <radialGradient id="proteinGlow" cx="50%" cy="50%" r="70%">
+              <stop offset="0%" stop-color="rgba(91,240,208,0.9)" />
+              <stop offset="55%" stop-color="rgba(123,140,255,0.75)" />
+              <stop offset="100%" stop-color="rgba(168,85,247,0.7)" />
+            </radialGradient>
+          </defs>
+          <rect x="30" y="30" width="420" height="360" rx="34" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.15)" />
+          <path d="M95 255 C150 120, 270 120, 325 255 S395 360, 405 210" fill="none" stroke="url(#proteinGlow)" stroke-width="18" stroke-linecap="round" />
+          <path d="M80 170 C145 270, 215 90, 300 210 S395 285, 410 165" fill="none" stroke="rgba(255,255,255,0.86)" stroke-width="12" stroke-linecap="round" />
+          <circle cx="155" cy="155" r="22" fill="#5bf0d0" fill-opacity="0.95" />
+          <circle cx="238" cy="228" r="28" fill="#7b8cff" fill-opacity="0.95" />
+          <circle cx="320" cy="160" r="20" fill="#a855f7" fill-opacity="0.95" />
+          <circle cx="367" cy="247" r="16" fill="#5bf0d0" fill-opacity="0.95" />
+          <text x="58" y="385" fill="rgba(255,255,255,0.75)" font-size="18">HBB protein render inspired by modern structural dashboards</text>
+        </svg>
+        <div class="d-grid mt-4">
+          <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#proteinModal">View 3D Protein</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="proteinModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content glass-modal">
+      <div class="modal-header border-0">
+        <h5 class="modal-title">3D Protein View</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body pt-0">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-7">
+            <div class="modal-figure">
+              <div class="modal-figure-inner">
+                <div class="glow-orbit"></div>
+                <div class="modal-figure-label">PDB {{ protein.pdb_structure_id }}</div>
+                <p class="mb-0">Integrate an interactive molecular viewer such as Mol* or NGL here for live rotation, residue inspection, and annotation overlays.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="detail-item mb-3"><span>Protein</span><strong>{{ protein.protein_name }}</strong></div>
+            <div class="detail-item mb-3"><span>Gene</span><strong>{{ protein.gene_name }}</strong></div>
+            <div class="detail-item mb-3"><span>UniProt</span><strong>{{ protein.uniprot_id }}</strong></div>
+            <a class="btn btn-outline-light w-100" href="https://www.rcsb.org/structure/{{ protein.pdb_structure_id }}" target="_blank" rel="noreferrer">Open RCSB Entry</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

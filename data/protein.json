@@ -1,0 +1,12 @@
+{
+  "gene_name": "HBB",
+  "protein_name": "Hemoglobin subunit beta",
+  "organism": "Homo sapiens",
+  "disease": "Sickle Cell Disease",
+  "uniprot_id": "P68871",
+  "protein_length": 147,
+  "molecular_weight": 16000.0,
+  "function": "Carries oxygen from the lung to peripheral tissues as part of the hemoglobin tetramer.",
+  "sequence": "VHLTPEEKSAVTALWGKVNVDEVGGEALGRLLVVYPWTQRFFESFGDLSTPDAVMGNPKVKAHGKKVLGAFSDGLAHLDNLKGTFATLSELHCDKLHVDPENFRLLGNVLVCVLAHHFGKEFTPPVQAAYQKVVAGVANALAHKYH",
+  "pdb_structure_id": "1A3N"
+}
