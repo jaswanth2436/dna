@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | HBB Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/dna/static/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.33.0/plotly.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="https://3dmol.org/build/3Dmol-min.js" defer></script>
+</head>
+<body class="app-shell" data-page="dashboard_page">
+  <div id="pageLoader" class="page-loader" aria-hidden="true">
+    <div class="loader-panel glass-card text-center">
+      <div class="dna-loader mx-auto mb-3"></div>
+      <div class="small text-uppercase letter-spacing">Loading HBB Dashboard</div>
+      <div class="fw-semibold mt-1">Preparing mutation intelligence</div>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top glass-nav">
+    <div class="container-xxl py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="/dna/">
+        <span class="brand-mark">H</span>
+        <span>
+          <span class="d-block brand-title">HBB Dashboard</span>
+          <small class="brand-subtitle">Mutation analysis and stability prediction</small>
+        </span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link " href="/dna/">Home</a></li>
+          <li class="nav-item"><a class="nav-link " href="/dna/protein/">Protein Information</a></li>
+          <li class="nav-item"><a class="nav-link " href="/dna/mutation/">Mutation Analysis</a></li>
+          <li class="nav-item"><a class="nav-link " href="/dna/stability/">Stability Prediction</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/dna/dashboard/">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link " href="/dna/about/">About</a></li>
+          <li class="nav-item ms-lg-2">
+            <button class="btn btn-theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">
+              <i class="bi bi-moon-stars"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="site-main">
+    
+<section class="container-xxl py-5">
+  <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+    <div>
+      <div class="section-label">Interactive dashboard</div>
+      <h2 class="section-title mt-2 mb-0">Mutation and stability analytics</h2>
+    </div>
+    <div class="dashboard-meta">Live summary generated from local JSON and SQLite sources</div>
+  </div>
+
+  <!-- Summary stat cards -->
+  <div class="row g-4 mb-4">
+    <div class="col-md-6 col-xl-3"><div class="glass-card stat-card"><div class="stat-label">Total Mutations</div><div class="stat-value" data-counter="6">0</div></div></div>
+    <div class="col-md-6 col-xl-3"><div class="glass-card stat-card"><div class="stat-label">Pathogenic Mutations</div><div class="stat-value" data-counter="3">0</div></div></div>
+    <div class="col-md-6 col-xl-3"><div class="glass-card stat-card"><div class="stat-label">Benign Mutations</div><div class="stat-value" data-counter="2">0</div></div></div>
+    <div class="col-md-6 col-xl-3"><div class="glass-card stat-card"><div class="stat-label">Average Stability Score</div><div class="stat-value" data-counter="49.5">0</div></div></div>
+  </div>
+
+  <!-- Dashboard data for charts -->
+  <script id="dashboard-data" type="application/json">
+    {"charts": {"clinical": {"labels": ["Pathogenic", "Likely Pathogenic", "Benign", "Uncertain Significance"], "values": [2, 1, 2, 1]}, "heatmap": {"x": ["\u0394\u0394G", "Confidence", "Stability Score"], "y": ["E6V", "E121K", "G16D", "K17N", "P36R", "A74T"], "z": [[0.0, 1.0, 0.0], [0.34615384615384615, 0.6363636363636364, 0.2916666666666667], [0.7692307692307692, 0.22727272727272727, 0.8125], [0.8846153846153845, 0.0, 0.9375], [0.23076923076923078, 0.7727272727272727, 0.14583333333333334], [1.0, 0.4090909090909091, 1.0]], "z_raw": [[-1.8, 96, 24], [-0.9, 88, 38], [0.2, 79, 63], [0.5, 74, 69], [-1.2, 91, 31], [0.8, 83, 72]]}, "mutation_distribution": {"labels": ["Pathogenic", "Benign", "Uncertain"], "values": [3, 2, 1]}, "mutation_frequency": {"labels": ["E6V", "E121K", "G16D", "K17N", "P36R", "A74T"], "values": [6, 121, 16, 17, 36, 74]}, "stability": {"labels": ["E6V", "E121K", "G16D", "K17N", "P36R", "A74T"], "values": [24, 38, 63, 69, 31, 72]}, "timeline": {"labels": ["2026-06-01", "2026-06-08", "2026-06-15", "2026-06-22", "2026-06-29", "2026-07-06"], "values": [24, 38, 63, 69, 31, 72]}}, "protein": {"disease": "Sickle Cell Disease", "function": "Carries oxygen from the lung to peripheral tissues as part of the hemoglobin tetramer.", "gene_name": "HBB", "molecular_weight": 16000.0, "organism": "Homo sapiens", "pdb_structure_id": "1A3N", "protein_length": 147, "protein_name": "Hemoglobin subunit beta", "sequence": "VHLTPEEKSAVTALWGKVNVDEVGGEALGRLLVVYPWTQRFFESFGDLSTPDAVMGNPKVKAHGKKVLGAFSDGLAHLDNLKGTFATLSELHCDKLHVDPENFRLLGNVLVCVLAHHFGKEFTPPVQAAYQKVVAGVANALAHKYH", "uniprot_id": "P68871"}, "recent_mutations": [{"clinical_significance": "Pathogenic", "disease_association": "Sickle Cell Disease", "mutant_amino_acid": "V", "mutation": "E6V", "position": 6, "prediction_status": "High Risk", "wild_amino_acid": "E"}, {"clinical_significance": "Likely Pathogenic", "disease_association": "Hemoglobinopathy", "mutant_amino_acid": "K", "mutation": "E121K", "position": 121, "prediction_status": "Moderate Risk", "wild_amino_acid": "E"}, {"clinical_significance": "Benign", "disease_association": "No Known Association", "mutant_amino_acid": "D", "mutation": "G16D", "position": 16, "prediction_status": "Low Risk", "wild_amino_acid": "G"}, {"clinical_significance": "Uncertain Significance", "disease_association": "Hemoglobin Variant", "mutant_amino_acid": "N", "mutation": "K17N", "position": 17, "prediction_status": "Review Required", "wild_amino_acid": "K"}, {"clinical_significance": "Pathogenic", "disease_association": "Sickle Cell Disease", "mutant_amino_acid": "R", "mutation": "P36R", "position": 36, "prediction_status": "High Risk", "wild_amino_acid": "P"}], "summary": {"average_stability_score": 49.5, "benign_mutations": 2, "gene_name": "HBB", "pathogenic_mutations": 3, "protein_name": "Hemoglobin subunit beta", "total_mutations": 6}}
+  </script>
+  <script>
+    (function(){
+      try {
+        var el = document.getElementById('dashboard-data');
+        window.dashboardData = el && el.textContent ? JSON.parse(el.textContent) : {};
+      } catch (e) {
+        window.dashboardData = {};
+        console && console.error && console.error('Failed to parse dashboard data', e);
+      }
+    })();
+  </script>
+
+  <!-- 3D HBB Structure Section -->
+  <div class="row g-4 mb-4">
+    <div class="col-12">
+      <div class="glass-card p-4">
+        <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+          <div>
+            <div class="section-label">3D Molecular Structure</div>
+            <h3 class="chart-title mt-1 mb-0">HBB Protein &mdash; PDB 1A3N</h3>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <span class="pill">Deoxy-HbS crystal structure &middot; 2.05 Å</span>
+            <a class="btn btn-outline-light btn-sm" href="/dna/protein/">
+              <i class="bi bi-box me-1"></i>Full viewer
+            </a>
+          </div>
+        </div>
+        <div id="nglDashboardViewer" class="ngl-dashboard-box" aria-label="HBB 3D molecular structure on dashboard">
+          <div class="ngl-fallback d-flex flex-column align-items-center justify-content-center h-100">
+            <div class="dna-loader mx-auto mb-3"></div>
+            <small class="text-uppercase letter-spacing" style="color:var(--text-muted)">Loading 3D structure…</small>
+          </div>
+        </div>
+        <div class="row g-3 mt-2">
+          <div class="col-6 col-md-3"><div class="mini-stat glass-soft"><span>Gene</span><strong>HBB</strong></div></div>
+          <div class="col-6 col-md-3"><div class="mini-stat glass-soft"><span>Protein</span><strong style="font-size:0.85rem">Hemoglobin subunit beta</strong></div></div>
+          <div class="col-6 col-md-3"><div class="mini-stat glass-soft"><span>Pathogenic/Total</span><strong>3/6</strong></div></div>
+          <div class="col-6 col-md-3"><div class="mini-stat glass-soft"><span>Avg Stability</span><strong>49.5</strong></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts grid -->
+  <div class="row g-4 mb-4">
+    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h3 class="chart-title">Mutation Frequency</h3><div class="chart-wrap"><canvas id="mutationFrequencyChart"></canvas></div></div></div>
+    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h3 class="chart-title">Mutation Distribution</h3><div class="chart-wrap"><canvas id="mutationDistributionChart"></canvas></div></div></div>
+    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h3 class="chart-title">Protein Stability</h3><div class="chart-wrap"><canvas id="stabilityChart"></canvas></div></div></div>
+    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h3 class="chart-title">Clinical Significance</h3><div class="chart-wrap"><canvas id="clinicalChart"></canvas></div></div></div>
+  </div>
+
+  <div class="row g-4 mb-4">
+    <div class="col-lg-7"><div class="glass-card chart-card h-100"><h3 class="chart-title">Stability Metrics Heatmap</h3><div id="heatmapChart" class="plotly-box"></div></div></div>
+    <div class="col-lg-5"><div class="glass-card chart-card h-100"><h3 class="chart-title">Stability Timeline</h3><div id="timelineChart" class="plotly-box"></div></div></div>
+  </div>
+
+  <!-- Recent mutations + summary -->
+  <div class="row g-4">
+    <div class="col-lg-7">
+      <div class="glass-card p-4 h-100">
+        <h3 class="chart-title mb-3">Recent Mutations</h3>
+        <div class="table-responsive">
+          <table class="table table-sm table-hover align-middle recent-table mb-0">
+            <thead><tr><th>Mutation</th><th>Position</th><th>Significance</th><th>Prediction</th></tr></thead>
+            <tbody>
+              
+              <tr>
+                <td><strong>E6V</strong></td>
+                <td>6</td>
+                <td>Pathogenic</td>
+                <td>High Risk</td>
+              </tr>
+              
+              <tr>
+                <td><strong>E121K</strong></td>
+                <td>121</td>
+                <td>Likely Pathogenic</td>
+                <td>Moderate Risk</td>
+              </tr>
+              
+              <tr>
+                <td><strong>G16D</strong></td>
+                <td>16</td>
+                <td>Benign</td>
+                <td>Low Risk</td>
+              </tr>
+              
+              <tr>
+                <td><strong>K17N</strong></td>
+                <td>17</td>
+                <td>Uncertain Significance</td>
+                <td>Review Required</td>
+              </tr>
+              
+              <tr>
+                <td><strong>P36R</strong></td>
+                <td>36</td>
+                <td>Pathogenic</td>
+                <td>High Risk</td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="glass-card p-4 h-100">
+        <h3 class="chart-title mb-3">Summary</h3>
+        <div class="summary-stack">
+          <div class="summary-item"><span>Gene</span><strong>HBB</strong></div>
+          <div class="summary-item"><span>Protein</span><strong>Hemoglobin subunit beta</strong></div>
+          <div class="summary-item"><span>Pathogenic ratio</span><strong>3/6</strong></div>
+          <div class="summary-item"><span>Stability focus</span><strong>Confidence-led interpretation</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  </main>
+
+  <footer class="site-footer mt-5">
+    <div class="container-xxl py-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <div>
+        <div class="footer-title">HBB Dashboard</div>
+        <div class="footer-copy">Biomedical analytics platform for hemoglobin beta mutation insight.</div>
+      </div>
+      <div class="footer-copy text-md-end">Built with Flask, Bootstrap 5, Chart.js, and Plotly.</div>
+    </div>
+  </footer>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer"></div>
+
+  <script src="/dna/static/js/script.js" defer></script>
+  
+</body>
+</html>

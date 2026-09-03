@@ -1,0 +1,884 @@
+:root {
+  --bg: #08111f;
+  --bg-soft: rgba(9, 17, 31, 0.72);
+  --surface: rgba(12, 22, 41, 0.72);
+  --surface-strong: rgba(14, 26, 48, 0.92);
+  --text: #eff6ff;
+  --text-muted: rgba(226, 232, 240, 0.72);
+  --line: rgba(148, 163, 184, 0.22);
+  --primary: #5bf0d0;
+  --secondary: #7b8cff;
+  --accent: #a855f7;
+  --warning: #f7b955;
+  --danger: #ff6b81;
+  --shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  --radius-xl: 28px;
+  --radius-lg: 22px;
+}
+
+[data-bs-theme="light"] {
+  --bg: #eef7fb;
+  --bg-soft: rgba(255, 255, 255, 0.72);
+  --surface: rgba(255, 255, 255, 0.75);
+  --surface-strong: rgba(255, 255, 255, 0.94);
+  --text: #08111f;
+  --text-muted: rgba(8, 17, 31, 0.7);
+  --line: rgba(15, 23, 42, 0.12);
+  --shadow: 0 18px 50px rgba(15, 23, 42, 0.12);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(91, 240, 208, 0.18), transparent 28%),
+    radial-gradient(circle at top right, rgba(168, 85, 247, 0.18), transparent 24%),
+    radial-gradient(circle at bottom left, rgba(123, 140, 255, 0.2), transparent 28%),
+    linear-gradient(180deg, #06101d 0%, #0d1728 100%);
+  color: var(--text);
+  font-family: "Manrope", sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+[data-bs-theme="light"] body {
+  background:
+    radial-gradient(circle at top left, rgba(91, 240, 208, 0.2), transparent 28%),
+    radial-gradient(circle at top right, rgba(168, 85, 247, 0.16), transparent 24%),
+    linear-gradient(180deg, #eef7fb 0%, #dfeef8 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, rgba(0,0,0,0.9), transparent 80%);
+  pointer-events: none;
+  opacity: 0.45;
+}
+
+.app-shell {
+  position: relative;
+}
+
+.site-main {
+  animation: none;
+}
+
+.glass-nav,
+.glass-card,
+.glass-modal {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+}
+
+.glass-nav {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+  color: #05111d;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 800;
+}
+
+.brand-title,
+.section-title,
+.chart-title,
+.footer-title,
+.modal-title {
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.brand-subtitle,
+.footer-copy,
+.dashboard-meta,
+.legend-pill,
+.eyebrow,
+.section-label,
+.card-kicker,
+.stat-label,
+.detail-item span,
+.summary-item span,
+.mini-stat span,
+.team-id,
+.subsection-heading {
+  color: var(--text-muted);
+}
+
+.nav-link {
+  border-radius: 999px;
+  padding: 0.7rem 1rem !important;
+}
+
+.nav-link.active,
+.nav-link:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+[data-bs-theme="light"] .nav-link.active,
+[data-bs-theme="light"] .nav-link:hover {
+  color: var(--text) !important;
+  background: rgba(8, 17, 31, 0.06);
+}
+
+.btn-theme-toggle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.btn-theme-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.hero-section {
+  padding-top: 1rem;
+}
+
+.hero-section .container-xxl,
+.py-lg-6 {
+  padding-top: 4rem !important;
+  padding-bottom: 4rem !important;
+}
+
+.dna-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(91, 240, 208, 0.25), transparent 18%),
+    radial-gradient(circle at 72% 24%, rgba(168, 85, 247, 0.22), transparent 16%),
+    linear-gradient(120deg, rgba(123, 140, 255, 0.16), transparent 50%),
+    repeating-linear-gradient(115deg, transparent 0 24px, rgba(255,255,255,0.04) 24px 28px);
+  animation: dnaShift 18s linear infinite;
+  opacity: 0.95;
+}
+
+.eyebrow,
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.pill,
+.legend-pill,
+.dashboard-meta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.06);
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 0 0 6px rgba(91, 240, 208, 0.12);
+}
+
+.glass-card {
+  border-radius: var(--radius-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-soft {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.hero-visual,
+.protein-image-card,
+.chart-card,
+.stability-card,
+.module-card,
+.mini-module,
+.stat-card,
+.detail-item,
+.summary-item,
+.metric-box,
+.team-member,
+.empty-state,
+.modal-figure,
+.loader-panel {
+  background: var(--surface-strong);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.hero-svg,
+.protein-svg {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 20px 50px rgba(0,0,0,0.2));
+}
+
+.mini-stat,
+.detail-item,
+.summary-item,
+.metric-box,
+.team-member {
+  padding: 1rem 1.1rem;
+}
+
+.mini-stat strong,
+.detail-item strong,
+.summary-item strong,
+.metric-box strong,
+.team-name,
+.stat-value {
+  display: block;
+  color: var(--text);
+  font-weight: 800;
+}
+
+.info-card,
+.stat-card {
+  padding: 1.25rem;
+}
+
+.stat-value {
+  font-size: clamp(1.35rem, 2vw, 2rem);
+}
+
+.animate-rise {
+  animation: riseUp 0.7s ease both;
+}
+
+.delay-1 { animation-delay: 0.08s; }
+.delay-2 { animation-delay: 0.16s; }
+.delay-3 { animation-delay: 0.24s; }
+.delay-4 { animation-delay: 0.32s; }
+
+.table,
+.form-control,
+.form-select {
+  color: var(--text);
+}
+
+.form-control,
+.form-select {
+  background: rgba(255,255,255,0.06);
+  border-color: var(--line);
+}
+
+[data-bs-theme="light"] .form-control,
+[data-bs-theme="light"] .form-select {
+  background: rgba(255,255,255,0.9);
+}
+
+.form-control:focus,
+.form-select:focus {
+  box-shadow: 0 0 0 0.2rem rgba(91, 240, 208, 0.18);
+  border-color: rgba(91, 240, 208, 0.5);
+}
+
+.mutation-table thead th,
+.recent-table thead th {
+  color: var(--text-muted);
+  font-weight: 700;
+  border-bottom: 1px solid var(--line);
+}
+
+.mutation-table tbody tr,
+.recent-table tbody tr {
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.mutation-table tbody tr:hover,
+.recent-table tbody tr:hover {
+  transform: translateY(-1px);
+}
+
+.aa-pill,
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-weight: 800;
+  padding: 0.35rem 0.75rem;
+}
+
+.aa-pill.wild { background: rgba(123, 140, 255, 0.18); color: var(--secondary); }
+.aa-pill.mutant { background: rgba(91, 240, 208, 0.18); color: var(--primary); }
+
+.status-badge {
+  border: 1px solid var(--line);
+  font-size: 0.85rem;
+}
+
+.status-badge.danger { background: rgba(255, 107, 129, 0.15); color: #ff8c9e; }
+.status-badge.success { background: rgba(91, 240, 208, 0.16); color: #61f3cf; }
+.status-badge.warning { background: rgba(247, 185, 85, 0.16); color: #ffc972; }
+.status-badge.neutral { background: rgba(123, 140, 255, 0.14); color: #9faaff; }
+
+.empty-state {
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.sequence-box {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  padding: 1rem;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+}
+
+.stability-card {
+  padding: 1.4rem;
+}
+
+.stability-gauge {
+  --gauge-value: 60%;
+  width: 170px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  background: conic-gradient(var(--primary) 0 var(--gauge-value), rgba(255,255,255,0.08) var(--gauge-value) 100%);
+  padding: 12px;
+}
+
+.stability-gauge-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--surface-strong);
+  text-align: center;
+}
+
+.stability-gauge-inner strong {
+  font-size: 1.5rem;
+}
+
+.progress {
+  height: 12px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px;
+}
+
+.progress-bar {
+  border-radius: 999px;
+}
+
+.chart-card {
+  padding: 1.4rem;
+  overflow: visible;
+}
+
+.chart-title {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.chart-wrap {
+  position: relative;
+  height: 260px;
+  width: 100%;
+}
+
+.chart-wrap canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.plotly-box {
+  min-height: 280px;
+  width: 100%;
+}
+
+.summary-stack {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.module-card,
+.mini-module {
+  padding: 1.25rem;
+}
+
+.module-card h3,
+.mini-module h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.2rem;
+}
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  background: rgba(255,255,255,0.03);
+}
+
+.page-loader {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(5, 10, 18, 0.5);
+  z-index: 2000;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.page-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-panel {
+  width: min(92vw, 360px);
+  padding: 1.5rem;
+}
+
+.dna-loader {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 35%, rgba(255,255,255,0.1) 36% 40%, transparent 41%),
+    conic-gradient(from 0deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+  mask: radial-gradient(circle at 50% 50%, transparent 45%, #000 46%);
+  animation: spin 1.25s linear infinite;
+}
+
+.toast-container .toast {
+  background: var(--surface-strong);
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+/* Keep dialog content inside the viewport while allowing long details to scroll. */
+.modal {
+  z-index: 1055;
+}
+
+.modal-dialog {
+  width: auto;
+  max-width: min(1140px, calc(100% - 2rem));
+  margin: 1rem auto;
+  pointer-events: auto;
+}
+
+.modal-content.glass-modal {
+  max-height: calc(100vh - 2rem);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.modal-dialog-scrollable .modal-content {
+  height: auto;
+  max-height: calc(100vh - 2rem);
+}
+
+.modal-header,
+.modal-footer {
+  flex-shrink: 0;
+}
+
+.modal-body {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.modal-backdrop {
+  z-index: 1050;
+}
+
+[data-bs-theme="light"] .btn-close-white {
+  filter: none;
+}
+
+.modal-figure {
+  min-height: 320px;
+  overflow: hidden;
+  position: relative;
+}
+
+.modal-figure-inner {
+  min-height: 320px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.glow-orbit {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.14);
+  animation: spin 14s linear infinite;
+}
+
+.modal-figure-label {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.letter-spacing {
+  letter-spacing: 0.18em;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border: 0;
+  color: #07111f;
+  box-shadow: 0 12px 28px rgba(91, 240, 208, 0.22);
+}
+
+.btn-primary:hover {
+  color: #06111d;
+  transform: translateY(-1px);
+}
+
+.btn-outline-light {
+  border-color: rgba(255,255,255,0.3);
+}
+
+.protein-image-card,
+.hero-visual,
+.chart-card,
+.stability-card,
+.module-card,
+.mini-module,
+.stat-card,
+.detail-item,
+.summary-item,
+.metric-box,
+.team-member,
+.empty-state,
+.loader-panel {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.protein-image-card:hover,
+.hero-visual:hover,
+.glass-card:hover,
+.module-card:hover,
+.mini-module:hover,
+.stat-card:hover,
+.stability-card:hover {
+  transform: translateY(-5px);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes riseUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes dnaShift {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-24px); }
+  100% { transform: translateX(0); }
+}
+
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 24px;
+    background: var(--surface-strong);
+    border: 1px solid var(--line);
+  }
+
+  .hero-section .container-xxl,
+  .py-lg-6 {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .display-4 {
+    font-size: 2.4rem;
+  }
+
+  .stability-gauge {
+    width: 150px;
+  }
+
+  .hero-visual,
+  .glass-card,
+  .chart-card,
+  .stability-card {
+    border-radius: 22px;
+  }
+}
+
+/* ── NGL Viewer containers ──────────────────────────────────────── */
+#nglHeroViewer,
+#nglInlineViewer,
+#nglModalViewer,
+#nglDashboardViewer {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: radial-gradient(circle at 40% 40%, rgba(91,240,208,0.07), transparent 55%),
+              radial-gradient(circle at 75% 65%, rgba(168,85,247,0.07), transparent 50%),
+              rgba(255,255,255,0.035);
+  border: 1px solid var(--line);
+}
+
+.popup-structure-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+  filter: saturate(0.75) contrast(1.05);
+  transition: opacity 0.35s ease;
+}
+
+.popup-structure-image.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-info-visual {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 86px;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.04);
+  color: var(--text-muted);
+}
+
+.modal-info-visual img {
+  width: 112px;
+  height: 70px;
+  flex: 0 0 auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.modal-info-visual strong {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--text);
+}
+
+/* Hero mini-viewer (index page) */
+.ngl-hero-box {
+  height: 280px;
+  width: 100%;
+}
+
+/* Inline viewer on protein page (right column) */
+.ngl-inline-box {
+  height: 320px;
+  width: 100%;
+}
+
+/* Full modal viewer */
+.ngl-modal-box {
+  height: 440px;
+  width: 100%;
+}
+
+/* Dashboard viewer */
+.ngl-dashboard-box {
+  height: 340px;
+  width: 100%;
+}
+
+/* Loading fallback inside NGL containers */
+.ngl-fallback,
+.ngl-loading-state {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+/* Hide fallback once NGL canvas appears */
+#nglHeroViewer canvas ~ .ngl-fallback,
+#nglInlineViewer canvas ~ .ngl-fallback,
+#nglModalViewer canvas ~ .ngl-loading-state,
+#nglDashboardViewer canvas ~ .ngl-fallback {
+  opacity: 0;
+}
+
+/* Make 3Dmol canvas fill the container exactly */
+#nglHeroViewer canvas,
+#nglInlineViewer canvas,
+#nglModalViewer canvas,
+#nglDashboardViewer canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  top: 0; left: 0;
+  z-index: 1;
+}
+
+/* 3Dmol also injects a div wrapper — make it fill too */
+#nglHeroViewer > div,
+#nglInlineViewer > div,
+#nglModalViewer > div,
+#nglDashboardViewer > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#nglModalViewer .ngl-loading-state {
+  z-index: 2;
+  background: rgba(5, 10, 18, 0.28);
+}
+
+/* ── Mutation table row click hint ──────────────────────────────── */
+#mutationTableBody tr {
+  cursor: pointer;
+}
+
+#mutationTableBody tr:hover td {
+  background: rgba(91,240,208,0.04);
+}
+
+/* ── Mutation detail modal mini-chart ───────────────────────────── */
+#mutationMiniChartWrap {
+  height: 160px;
+  position: relative;
+}
+
+/* ── Stability page chart section ───────────────────────────────── */
+.stability-chart-section {
+  margin-bottom: 2rem;
+}
+
+.subsection-heading {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+/* ── Protein page link buttons ───────────────────────────────────── */
+.protein-image-card .btn-outline-light {
+  font-size: 0.85rem;
+}
+
+/* ── Modal controls bar ─────────────────────────────────────────── */
+.ngl-controls {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+/* ── Glass soft (light mode fix) ────────────────────────────────── */
+[data-bs-theme="light"] .glass-soft {
+  background: rgba(8,17,31,0.04);
+}
+
+[data-bs-theme="light"] #nglHeroViewer,
+[data-bs-theme="light"] #nglInlineViewer,
+[data-bs-theme="light"] #nglModalViewer,
+[data-bs-theme="light"] #nglDashboardViewer {
+  background: radial-gradient(circle at 40% 40%, rgba(91,240,208,0.09), transparent 55%),
+              rgba(8,17,31,0.03);
+}
+
+/* ── Responsive NGL adjustments ─────────────────────────────────── */
+@media (max-width: 767.98px) {
+  .modal-dialog {
+    max-width: calc(100% - 1rem);
+    margin: 0.5rem auto;
+  }
+
+  .modal-content.glass-modal {
+    max-height: calc(100vh - 1rem);
+    border-radius: 18px;
+  }
+
+  .modal-dialog-scrollable .modal-content {
+    max-height: calc(100vh - 1rem);
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .modal-body .p-4 {
+    padding: 1rem !important;
+  }
+
+  .modal-info-visual {
+    align-items: flex-start;
+  }
+
+  .modal-info-visual img {
+    width: 92px;
+    height: 64px;
+  }
+
+  .ngl-hero-box { height: 220px; }
+  .ngl-inline-box { height: 240px; }
+  .ngl-modal-box { height: 300px; }
+  .ngl-dashboard-box { height: 240px; }
+}
+

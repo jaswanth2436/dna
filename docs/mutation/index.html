@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mutation Analysis | HBB Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/dna/static/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.33.0/plotly.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="https://3dmol.org/build/3Dmol-min.js" defer></script>
+</head>
+<body class="app-shell" data-page="mutation_page">
+  <div id="pageLoader" class="page-loader" aria-hidden="true">
+    <div class="loader-panel glass-card text-center">
+      <div class="dna-loader mx-auto mb-3"></div>
+      <div class="small text-uppercase letter-spacing">Loading HBB Dashboard</div>
+      <div class="fw-semibold mt-1">Preparing mutation intelligence</div>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top glass-nav">
+    <div class="container-xxl py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="/dna/">
+        <span class="brand-mark">H</span>
+        <span>
+          <span class="d-block brand-title">HBB Dashboard</span>
+          <small class="brand-subtitle">Mutation analysis and stability prediction</small>
+        </span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link " href="/dna/">Home</a></li>
+          <li class="nav-item"><a class="nav-link " href="/dna/protein/">Protein Information</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/dna/mutation/">Mutation Analysis</a></li>
+          <li class="nav-item"><a class="nav-link " href="/dna/stability/">Stability Prediction</a></li>
+          <li class="nav-item"><a class="nav-link " href="/dna/dashboard/">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link " href="/dna/about/">About</a></li>
+          <li class="nav-item ms-lg-2">
+            <button class="btn btn-theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">
+              <i class="bi bi-moon-stars"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="site-main">
+    
+<section class="container-xxl py-5">
+  <div class="glass-card p-4 p-lg-5">
+    <div class="d-flex flex-column flex-lg-row gap-3 justify-content-between align-items-lg-end mb-4">
+      <div>
+        <div class="section-label">Mutation analysis</div>
+        <h2 class="section-title mt-2 mb-0">Search and filter HBB mutations</h2>
+      </div>
+      <div class="mutation-controls d-flex flex-column flex-md-row gap-3">
+        <input class="form-control form-control-lg" id="mutationSearch" type="search" placeholder="Search mutation, disease, or significance">
+        <select class="form-select form-select-lg" id="positionFilter">
+          <option value="all">All positions</option>
+          <option value="1-20">1 - 20</option>
+          <option value="21-40">21 - 40</option>
+          <option value="41-80">41 - 80</option>
+          <option value="81+">81+</option>
+        </select>
+      </div>
+    </div>
+    <p class="small mb-3" style="color:var(--text-muted)"><i class="bi bi-info-circle me-1"></i>Click any row to view full mutation details and stability metrics.</p>
+    <div class="table-responsive mutation-table-wrap">
+      <table class="table table-hover align-middle mutation-table mb-0">
+        <thead>
+          <tr>
+            <th>Mutation</th>
+            <th>Position</th>
+            <th>Wild AA</th>
+            <th>Mutant AA</th>
+            <th>Clinical Significance</th>
+            <th>Disease Association</th>
+            <th>Prediction Status</th>
+          </tr>
+        </thead>
+        <tbody id="mutationTableBody">
+          
+          <tr
+            data-mutation="e6v pathogenic sickle cell disease"
+            data-position="6"
+            data-wild="E"
+            data-mutant="V"
+            data-significance="Pathogenic"
+            data-disease="Sickle Cell Disease"
+            data-prediction="High Risk"
+            
+            data-deltag="-1.8"
+            data-confidence="96"
+            data-stability="24"
+            
+            style="cursor:pointer"
+          >
+            <td><strong>E6V</strong></td>
+            <td>6</td>
+            <td><span class="aa-pill wild">E</span></td>
+            <td><span class="aa-pill mutant">V</span></td>
+            <td>
+              <span class="status-badge danger">
+                Pathogenic
+              </span>
+            </td>
+            <td>Sickle Cell Disease</td>
+            <td>High Risk</td>
+          </tr>
+          
+          <tr
+            data-mutation="e121k likely pathogenic hemoglobinopathy"
+            data-position="121"
+            data-wild="E"
+            data-mutant="K"
+            data-significance="Likely Pathogenic"
+            data-disease="Hemoglobinopathy"
+            data-prediction="Moderate Risk"
+            
+            data-deltag="-0.9"
+            data-confidence="88"
+            data-stability="38"
+            
+            style="cursor:pointer"
+          >
+            <td><strong>E121K</strong></td>
+            <td>121</td>
+            <td><span class="aa-pill wild">E</span></td>
+            <td><span class="aa-pill mutant">K</span></td>
+            <td>
+              <span class="status-badge danger">
+                Likely Pathogenic
+              </span>
+            </td>
+            <td>Hemoglobinopathy</td>
+            <td>Moderate Risk</td>
+          </tr>
+          
+          <tr
+            data-mutation="g16d benign no known association"
+            data-position="16"
+            data-wild="G"
+            data-mutant="D"
+            data-significance="Benign"
+            data-disease="No Known Association"
+            data-prediction="Low Risk"
+            
+            data-deltag="0.2"
+            data-confidence="79"
+            data-stability="63"
+            
+            style="cursor:pointer"
+          >
+            <td><strong>G16D</strong></td>
+            <td>16</td>
+            <td><span class="aa-pill wild">G</span></td>
+            <td><span class="aa-pill mutant">D</span></td>
+            <td>
+              <span class="status-badge success">
+                Benign
+              </span>
+            </td>
+            <td>No Known Association</td>
+            <td>Low Risk</td>
+          </tr>
+          
+          <tr
+            data-mutation="k17n uncertain significance hemoglobin variant"
+            data-position="17"
+            data-wild="K"
+            data-mutant="N"
+            data-significance="Uncertain Significance"
+            data-disease="Hemoglobin Variant"
+            data-prediction="Review Required"
+            
+            data-deltag="0.5"
+            data-confidence="74"
+            data-stability="69"
+            
+            style="cursor:pointer"
+          >
+            <td><strong>K17N</strong></td>
+            <td>17</td>
+            <td><span class="aa-pill wild">K</span></td>
+            <td><span class="aa-pill mutant">N</span></td>
+            <td>
+              <span class="status-badge warning">
+                Uncertain Significance
+              </span>
+            </td>
+            <td>Hemoglobin Variant</td>
+            <td>Review Required</td>
+          </tr>
+          
+          <tr
+            data-mutation="p36r pathogenic sickle cell disease"
+            data-position="36"
+            data-wild="P"
+            data-mutant="R"
+            data-significance="Pathogenic"
+            data-disease="Sickle Cell Disease"
+            data-prediction="High Risk"
+            
+            data-deltag="-1.2"
+            data-confidence="91"
+            data-stability="31"
+            
+            style="cursor:pointer"
+          >
+            <td><strong>P36R</strong></td>
+            <td>36</td>
+            <td><span class="aa-pill wild">P</span></td>
+            <td><span class="aa-pill mutant">R</span></td>
+            <td>
+              <span class="status-badge danger">
+                Pathogenic
+              </span>
+            </td>
+            <td>Sickle Cell Disease</td>
+            <td>High Risk</td>
+          </tr>
+          
+          <tr
+            data-mutation="a74t benign population variant"
+            data-position="74"
+            data-wild="A"
+            data-mutant="T"
+            data-significance="Benign"
+            data-disease="Population Variant"
+            data-prediction="Low Risk"
+            
+            data-deltag="0.8"
+            data-confidence="83"
+            data-stability="72"
+            
+            style="cursor:pointer"
+          >
+            <td><strong>A74T</strong></td>
+            <td>74</td>
+            <td><span class="aa-pill wild">A</span></td>
+            <td><span class="aa-pill mutant">T</span></td>
+            <td>
+              <span class="status-badge success">
+                Benign
+              </span>
+            </td>
+            <td>Population Variant</td>
+            <td>Low Risk</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    <div id="mutationEmptyState" class="empty-state d-none mt-4">
+      No mutations match the current search criteria.
+    </div>
+  </div>
+</section>
+
+<!-- Mutation Detail Modal -->
+<div class="modal fade" id="mutationDetailModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content glass-modal">
+      <div class="modal-header border-0 pb-0">
+        <div>
+          <div class="small text-uppercase letter-spacing" style="color:var(--text-muted)">Mutation detail</div>
+          <h5 class="modal-title mt-1" id="mdMutation">—</h5>
+        </div>
+        <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body pt-3">
+        <div class="modal-info-visual mb-4">
+          <img src="https://cdn.rcsb.org/images/structures/1a3n_assembly-1.jpeg" alt="HBB protein structure">
+          <div>
+            <div class="small text-uppercase letter-spacing">HBB structure reference</div>
+            <strong>PDB 1A3N</strong>
+          </div>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="p-4 h-100" style="background:rgba(255,255,255,0.04);border-radius:18px;border:1px solid var(--line)">
+              <div class="mb-3">
+                <span id="mdSignificance" class="status-badge neutral fs-6">—</span>
+              </div>
+              <div class="row g-3 mt-1">
+                <div class="col-6">
+                  <div class="detail-item">
+                    <span>Position</span>
+                    <strong id="mdPosition">—</strong>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="detail-item">
+                    <span>Wild Amino Acid</span>
+                    <strong id="mdWild">—</strong>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="detail-item">
+                    <span>Mutant Amino Acid</span>
+                    <strong id="mdMutant">—</strong>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="detail-item">
+                    <span>Prediction Status</span>
+                    <strong><span id="mdPredBadge" class="status-badge neutral">—</span></strong>
+                  </div>
+                </div>
+              </div>
+              <div class="detail-item mt-3">
+                <span>Disease Association</span>
+                <strong id="mdDisease">—</strong>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-4 h-100" style="background:rgba(255,255,255,0.04);border-radius:18px;border:1px solid var(--line)">
+              <div class="subsection-heading mb-3">Stability Metrics</div>
+              <div class="row g-3 mb-3">
+                <div class="col-4">
+                  <div class="metric-box text-center">
+                    <span>&#916;&#916;G</span>
+                    <strong id="mdDeltaG">—</strong>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="metric-box text-center">
+                    <span>Confidence</span>
+                    <strong id="mdConfidence">—</strong>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="metric-box text-center">
+                    <span>Stability</span>
+                    <strong id="mdStabilityScore">—</strong>
+                  </div>
+                </div>
+              </div>
+              <div id="mutationMiniChartWrap" style="height:160px;position:relative">
+                <canvas id="mutationMiniChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <a class="btn btn-outline-light btn-sm" href="/dna/stability/">
+          <i class="bi bi-bar-chart me-1"></i>View all stability data
+        </a>
+        <button type="button" class="btn btn-outline-light btn-sm" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </main>
+
+  <footer class="site-footer mt-5">
+    <div class="container-xxl py-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <div>
+        <div class="footer-title">HBB Dashboard</div>
+        <div class="footer-copy">Biomedical analytics platform for hemoglobin beta mutation insight.</div>
+      </div>
+      <div class="footer-copy text-md-end">Built with Flask, Bootstrap 5, Chart.js, and Plotly.</div>
+    </div>
+  </footer>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer"></div>
+
+  <script src="/dna/static/js/script.js" defer></script>
+  
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About | HBB Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/dna/static/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.33.0/plotly.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="https://3dmol.org/build/3Dmol-min.js" defer></script>
+</head>
+<body class="app-shell" data-page="about_page">
+  <div id="pageLoader" class="page-loader" aria-hidden="true">
+    <div class="loader-panel glass-card text-center">
+      <div class="dna-loader mx-auto mb-3"></div>
+      <div class="small text-uppercase letter-spacing">Loading HBB Dashboard</div>
+      <div class="fw-semibold mt-1">Preparing mutation intelligence</div>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top glass-nav">
+    <div class="container-xxl py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="/dna/">
+        <span class="brand-mark">H</span>
+        <span>
+          <span class="d-block brand-title">HBB Dashboard</span>
+          <small class="brand-subtitle">Mutation analysis and stability prediction</small>
+        </span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link " href="/dna/">Home</a></li>
+          <li class="nav-item"><a class="nav-link " href="/dna/protein/">Protein Information</a></li>
+          <li class="nav-item"><a class="nav-link " href="/dna/mutation/">Mutation Analysis</a></li>
+          <li class="nav-item"><a class="nav-link " href="/dna/stability/">Stability Prediction</a></li>
+          <li class="nav-item"><a class="nav-link " href="/dna/dashboard/">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/dna/about/">About</a></li>
+          <li class="nav-item ms-lg-2">
+            <button class="btn btn-theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">
+              <i class="bi bi-moon-stars"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="site-main">
+    
+<section class="container-xxl py-5">
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="glass-card p-4 p-lg-5 h-100">
+        <div class="section-label">About the project</div>
+        <h2 class="section-title mt-2">Development of a Web-Based Dashboard for Mutation Analysis and Stability Prediction of the HBB Protein in Sickle Cell Disease</h2>
+        <p class="lead text-secondary-emphasis mt-3">This platform combines curated protein metadata, mutation interpretation, predictive stability analysis, and interactive biomedical visualization into one polished research dashboard.</p>
+        <div class="row g-4 mt-2">
+          <div class="col-md-6">
+            <div class="module-card">
+              <h3>Objectives</h3>
+              <p>Enable quick analysis of HBB variants, structural context, and predicted stability effects in a clean and accessible interface.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="module-card">
+              <h3>Future Scope</h3>
+              <p>Extend with live database-backed submissions, 3D molecular viewers, external API integration, and comparative cohort analytics.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="glass-card p-4 p-lg-5 h-100">
+        <div class="section-label">Team Members</div>
+        <div class="team-list mt-4">
+          <div class="team-member">
+            <span class="team-name">K. Reddy Meghana</span>
+            <span class="team-id">192322030</span>
+          </div>
+          <div class="team-member">
+            <span class="team-name">N. Mohana Swetha</span>
+            <span class="team-id">192322098</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 mt-1">
+    <div class="col-md-6 col-lg-3"><div class="glass-card p-4 h-100 mini-module"><h3>Module 1</h3><p>Protein Retrieval</p><p>Mutation Analysis</p><p>Stability Prediction</p></div></div>
+    <div class="col-md-6 col-lg-3"><div class="glass-card p-4 h-100 mini-module"><h3>Module 2</h3><p>Web Dashboard</p><p>Visualization</p><p>Charts</p></div></div>
+    <div class="col-md-6 col-lg-3"><div class="glass-card p-4 h-100 mini-module"><h3>Data Layer</h3><p>JSON sample sets</p><p>SQLite persistence</p><p>Local Flask bootstrap</p></div></div>
+    <div class="col-md-6 col-lg-3"><div class="glass-card p-4 h-100 mini-module"><h3>Delivery</h3><p>Responsive UI</p><p>Dark/light mode</p><p>Interactive analytics</p></div></div>
+  </div>
+</section>
+
+  </main>
+
+  <footer class="site-footer mt-5">
+    <div class="container-xxl py-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <div>
+        <div class="footer-title">HBB Dashboard</div>
+        <div class="footer-copy">Biomedical analytics platform for hemoglobin beta mutation insight.</div>
+      </div>
+      <div class="footer-copy text-md-end">Built with Flask, Bootstrap 5, Chart.js, and Plotly.</div>
+    </div>
+  </footer>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer"></div>
+
+  <script src="/dna/static/js/script.js" defer></script>
+  
+</body>
+</html>
