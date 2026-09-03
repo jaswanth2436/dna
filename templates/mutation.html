@@ -73,7 +73,7 @@
 
 <!-- Mutation Detail Modal -->
 <div class="modal fade" id="mutationDetailModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
     <div class="modal-content glass-modal">
       <div class="modal-header border-0 pb-0">
         <div>
@@ -83,6 +83,13 @@
         <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body pt-3">
+        <div class="modal-info-visual mb-4">
+          <img src="https://cdn.rcsb.org/images/structures/1a3n_assembly-1.jpeg" alt="HBB protein structure">
+          <div>
+            <div class="small text-uppercase letter-spacing">HBB structure reference</div>
+            <strong>PDB {{ protein.pdb_structure_id }}</strong>
+          </div>
+        </div>
         <div class="row g-4">
           <div class="col-md-6">
             <div class="p-4 h-100" style="background:rgba(255,255,255,0.04);border-radius:18px;border:1px solid var(--line)">

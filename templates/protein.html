@@ -51,7 +51,7 @@
 
 <!-- 3D Viewer Modal -->
 <div class="modal fade" id="proteinModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-xl">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
     <div class="modal-content glass-modal">
       <div class="modal-header border-0 pb-0">
         <div>
@@ -65,9 +65,10 @@
           <div class="col-lg-8">
             <!-- NGL Viewer -->
             <div id="nglModalViewer" class="ngl-modal-box" aria-label="Full 3D view of HBB protein PDB 1A3N">
+              <img class="popup-structure-image" src="https://cdn.rcsb.org/images/structures/1a3n_assembly-1.jpeg" alt="HBB protein structure">
               <div class="ngl-loading-state d-flex flex-column align-items-center justify-content-center h-100">
                 <div class="dna-loader mx-auto mb-3"></div>
-                <div class="small text-uppercase letter-spacing" style="color:var(--text-muted)">Fetching PDB structure…</div>
+                <div class="small text-uppercase letter-spacing" style="color:var(--text-muted)">Loading interactive structure</div>
               </div>
             </div>
             <!-- Viewer Controls -->

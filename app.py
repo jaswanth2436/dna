@@ -266,12 +266,14 @@ def protein_page():
 
 @app.route("/mutation")
 def mutation_page():
+    protein = get_protein_data()
     mutations = get_mutations_data()
     stability = get_stability_data()
     stability_map = {item["mutation"]: item for item in stability}
     return render_template(
         "mutation.html",
         title="Mutation Analysis",
+        protein=protein,
         mutations=mutations,
         stability_map=stability_map,
     )

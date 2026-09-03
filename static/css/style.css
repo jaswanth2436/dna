@@ -66,7 +66,7 @@ body::before {
 }
 
 .site-main {
-  animation: fadeInUp 0.6s ease both;
+  animation: none;
 }
 
 .glass-nav,
@@ -459,6 +459,7 @@ body::before {
 .page-loader.hidden {
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
 }
 
 .loader-panel {
@@ -481,6 +482,48 @@ body::before {
   background: var(--surface-strong);
   color: var(--text);
   border: 1px solid var(--line);
+}
+
+/* Keep dialog content inside the viewport while allowing long details to scroll. */
+.modal {
+  z-index: 1055;
+}
+
+.modal-dialog {
+  width: auto;
+  max-width: min(1140px, calc(100% - 2rem));
+  margin: 1rem auto;
+  pointer-events: auto;
+}
+
+.modal-content.glass-modal {
+  max-height: calc(100vh - 2rem);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.modal-dialog-scrollable .modal-content {
+  height: auto;
+  max-height: calc(100vh - 2rem);
+}
+
+.modal-header,
+.modal-footer {
+  flex-shrink: 0;
+}
+
+.modal-body {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.modal-backdrop {
+  z-index: 1050;
+}
+
+[data-bs-theme="light"] .btn-close-white {
+  filter: none;
 }
 
 .modal-figure {
@@ -627,6 +670,48 @@ body::before {
   border: 1px solid var(--line);
 }
 
+.popup-structure-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+  filter: saturate(0.75) contrast(1.05);
+  transition: opacity 0.35s ease;
+}
+
+.popup-structure-image.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-info-visual {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 86px;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.04);
+  color: var(--text-muted);
+}
+
+.modal-info-visual img {
+  width: 112px;
+  height: 70px;
+  flex: 0 0 auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.modal-info-visual strong {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--text);
+}
+
 /* Hero mini-viewer (index page) */
 .ngl-hero-box {
   height: 280px;
@@ -682,6 +767,7 @@ body::before {
   height: 100% !important;
   position: absolute !important;
   top: 0; left: 0;
+  z-index: 1;
 }
 
 /* 3Dmol also injects a div wrapper — make it fill too */
@@ -691,6 +777,11 @@ body::before {
 #nglDashboardViewer > div {
   width: 100% !important;
   height: 100% !important;
+}
+
+#nglModalViewer .ngl-loading-state {
+  z-index: 2;
+  background: rgba(5, 10, 18, 0.28);
 }
 
 /* ── Mutation table row click hint ──────────────────────────────── */
@@ -751,6 +842,40 @@ body::before {
 
 /* ── Responsive NGL adjustments ─────────────────────────────────── */
 @media (max-width: 767.98px) {
+  .modal-dialog {
+    max-width: calc(100% - 1rem);
+    margin: 0.5rem auto;
+  }
+
+  .modal-content.glass-modal {
+    max-height: calc(100vh - 1rem);
+    border-radius: 18px;
+  }
+
+  .modal-dialog-scrollable .modal-content {
+    max-height: calc(100vh - 1rem);
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .modal-body .p-4 {
+    padding: 1rem !important;
+  }
+
+  .modal-info-visual {
+    align-items: flex-start;
+  }
+
+  .modal-info-visual img {
+    width: 92px;
+    height: 64px;
+  }
+
   .ngl-hero-box { height: 220px; }
   .ngl-inline-box { height: 240px; }
   .ngl-modal-box { height: 300px; }

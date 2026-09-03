@@ -518,9 +518,10 @@
 
     // Remove loading fallback once viewer is ready
     var fallback = el.querySelector('.ngl-fallback, .ngl-loading-state');
+    var popupImage = el.querySelector('.popup-structure-image');
 
     var viewer = $3Dmol.createViewer(el, {
-      backgroundColor: 'transparent',
+      backgroundColor: '#08111f',
       antialias: true,
       id: containerId + '-canvas',
     });
@@ -538,6 +539,7 @@
       viewer.render();
       if (opts.spin) viewer.spin('y', 1);
       if (fallback) fallback.style.opacity = '0';
+      if (popupImage) popupImage.classList.add('is-hidden');
     });
 
     window.addEventListener('resize', function () { viewer.resize(); });
