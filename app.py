@@ -191,10 +191,27 @@ def build_dashboard_payload() -> dict:
 
     heatmap_x = ["ΔΔG", "Confidence", "Stability Score"]
     heatmap_y = [item["mutation"] for item in stability]
-    heatmap_z = [
+    heatmap_metrics = [
         [item["delta_g"] for item in stability],
         [item["confidence_score"] for item in stability],
         [item["stability_score"] for item in stability],
+    ]
+
+    def normalize(values: list[float]) -> list[float]:
+        low, high = min(values), max(values)
+        span = high - low
+        if span == 0:
+            return [0.5 for _ in values]
+        return [(value - low) / span for value in values]
+
+    normalized_metrics = [normalize(column) for column in heatmap_metrics]
+    heatmap_z = [
+        [normalized_metrics[col_idx][row_idx] for col_idx in range(len(heatmap_x))]
+        for row_idx in range(len(stability))
+    ]
+    heatmap_z_raw = [
+        [heatmap_metrics[col_idx][row_idx] for col_idx in range(len(heatmap_x))]
+        for row_idx in range(len(stability))
     ]
 
     timeline_labels = [item["reported_on"] for item in stability]
@@ -214,7 +231,12 @@ def build_dashboard_payload() -> dict:
             "mutation_distribution": {"labels": distribution_labels, "values": distribution_values},
             "stability": {"labels": stability_labels, "values": stability_values},
             "clinical": {"labels": clinical_labels, "values": clinical_values},
-            "heatmap": {"x": heatmap_x, "y": heatmap_y, "z": heatmap_z},
+            "heatmap": {
+                "x": heatmap_x,
+                "y": heatmap_y,
+                "z": heatmap_z,
+                "z_raw": heatmap_z_raw,
+            },
             "timeline": {"labels": timeline_labels, "values": timeline_values},
         },
         "recent_mutations": mutations[:5],
@@ -245,10 +267,13 @@ def protein_page():
 @app.route("/mutation")
 def mutation_page():
     mutations = get_mutations_data()
+    stability = get_stability_data()
+    stability_map = {item["mutation"]: item for item in stability}
     return render_template(
         "mutation.html",
         title="Mutation Analysis",
         mutations=mutations,
+        stability_map=stability_map,
     )
 
 

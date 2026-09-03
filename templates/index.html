@@ -14,27 +14,17 @@
         </div>
       </div>
       <div class="col-lg-5">
-        <div class="glass-card hero-visual p-4 p-lg-5">
+        <div class="glass-card hero-visual p-3 p-lg-4">
           <div class="d-flex align-items-center justify-content-between mb-3">
-            <span class="pill">HBB protein illustration</span>
+            <span class="pill">HBB 3D structure &mdash; PDB 1A3N</span>
             <span class="status-dot"></span>
           </div>
-          <svg viewBox="0 0 420 420" class="hero-svg" role="img" aria-label="Stylized HBB protein helix illustration">
-            <defs>
-              <linearGradient id="helixGradient" x1="0%" x2="100%" y1="0%" y2="100%">
-                <stop offset="0%" stop-color="#5bf0d0" />
-                <stop offset="50%" stop-color="#7b8cff" />
-                <stop offset="100%" stop-color="#a855f7" />
-              </linearGradient>
-            </defs>
-            <circle cx="210" cy="210" r="148" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" />
-            <path d="M95 205 C135 145, 185 145, 225 205 S315 265, 325 205" fill="none" stroke="url(#helixGradient)" stroke-width="14" stroke-linecap="round" />
-            <path d="M95 245 C135 185, 185 185, 225 245 S315 305, 325 245" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="10" stroke-linecap="round" />
-            <path d="M120 160 L160 290 M175 145 L220 305 M235 145 L280 305 M295 160 L335 290" stroke="rgba(91,240,208,0.9)" stroke-width="5" stroke-linecap="round" />
-            <circle cx="130" cy="170" r="8" fill="#5bf0d0" />
-            <circle cx="205" cy="255" r="8" fill="#7b8cff" />
-            <circle cx="285" cy="170" r="8" fill="#a855f7" />
-          </svg>
+          <div id="nglHeroViewer" class="ngl-hero-box" aria-label="Interactive 3D view of HBB protein (PDB: 1A3N)">
+            <div class="ngl-fallback d-flex flex-column align-items-center justify-content-center h-100">
+              <div class="dna-loader mx-auto mb-3"></div>
+              <small class="text-uppercase letter-spacing" style="color:var(--text-muted)">Loading 3D structure…</small>
+            </div>
+          </div>
           <div class="row g-3 mt-2">
             <div class="col-6">
               <div class="mini-stat glass-soft">
@@ -46,6 +36,18 @@
               <div class="mini-stat glass-soft">
                 <span>Protein</span>
                 <strong>{{ protein.protein_name }}</strong>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="mini-stat glass-soft">
+                <span>UniProt</span>
+                <strong>{{ protein.uniprot_id }}</strong>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="mini-stat glass-soft">
+                <span>PDB ID</span>
+                <strong>{{ protein.pdb_structure_id }}</strong>
               </div>
             </div>
           </div>
@@ -66,19 +68,19 @@
     <div class="col-md-6 col-xl-3">
       <div class="glass-card info-card stat-card animate-rise delay-1">
         <div class="stat-label">Protein Name</div>
-        <div class="stat-value">{{ protein.protein_name }}</div>
+        <div class="stat-value" style="font-size:1.1rem">{{ protein.protein_name }}</div>
       </div>
     </div>
     <div class="col-md-6 col-xl-3">
       <div class="glass-card info-card stat-card animate-rise delay-2">
         <div class="stat-label">Organism</div>
-        <div class="stat-value">{{ protein.organism }}</div>
+        <div class="stat-value" style="font-size:1.1rem">{{ protein.organism }}</div>
       </div>
     </div>
     <div class="col-md-6 col-xl-3">
       <div class="glass-card info-card stat-card animate-rise delay-3">
         <div class="stat-label">Disease</div>
-        <div class="stat-value">{{ protein.disease }}</div>
+        <div class="stat-value" style="font-size:1.1rem">{{ protein.disease }}</div>
       </div>
     </div>
     <div class="col-md-6 col-xl-3">

@@ -18,14 +18,15 @@
         </select>
       </div>
     </div>
+    <p class="small mb-3" style="color:var(--text-muted)"><i class="bi bi-info-circle me-1"></i>Click any row to view full mutation details and stability metrics.</p>
     <div class="table-responsive mutation-table-wrap">
       <table class="table table-hover align-middle mutation-table mb-0">
         <thead>
           <tr>
             <th>Mutation</th>
             <th>Position</th>
-            <th>Wild Amino Acid</th>
-            <th>Mutant Amino Acid</th>
+            <th>Wild AA</th>
+            <th>Mutant AA</th>
             <th>Clinical Significance</th>
             <th>Disease Association</th>
             <th>Prediction Status</th>
@@ -33,7 +34,21 @@
         </thead>
         <tbody id="mutationTableBody">
           {% for item in mutations %}
-          <tr data-mutation="{{ item.mutation|lower }} {{ item.clinical_significance|lower }} {{ item.disease_association|lower }}" data-position="{{ item.position }}">
+          <tr
+            data-mutation="{{ item.mutation|lower }} {{ item.clinical_significance|lower }} {{ item.disease_association|lower }}"
+            data-position="{{ item.position }}"
+            data-wild="{{ item.wild_amino_acid }}"
+            data-mutant="{{ item.mutant_amino_acid }}"
+            data-significance="{{ item.clinical_significance }}"
+            data-disease="{{ item.disease_association }}"
+            data-prediction="{{ item.prediction_status }}"
+            {% if stability_map and item.mutation in stability_map %}
+            data-deltag="{{ stability_map[item.mutation].delta_g }}"
+            data-confidence="{{ stability_map[item.mutation].confidence_score }}"
+            data-stability="{{ stability_map[item.mutation].stability_score }}"
+            {% endif %}
+            style="cursor:pointer"
+          >
             <td><strong>{{ item.mutation }}</strong></td>
             <td>{{ item.position }}</td>
             <td><span class="aa-pill wild">{{ item.wild_amino_acid }}</span></td>
@@ -55,4 +70,94 @@
     </div>
   </div>
 </section>
+
+<!-- Mutation Detail Modal -->
+<div class="modal fade" id="mutationDetailModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content glass-modal">
+      <div class="modal-header border-0 pb-0">
+        <div>
+          <div class="small text-uppercase letter-spacing" style="color:var(--text-muted)">Mutation detail</div>
+          <h5 class="modal-title mt-1" id="mdMutation">—</h5>
+        </div>
+        <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body pt-3">
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="p-4 h-100" style="background:rgba(255,255,255,0.04);border-radius:18px;border:1px solid var(--line)">
+              <div class="mb-3">
+                <span id="mdSignificance" class="status-badge neutral fs-6">—</span>
+              </div>
+              <div class="row g-3 mt-1">
+                <div class="col-6">
+                  <div class="detail-item">
+                    <span>Position</span>
+                    <strong id="mdPosition">—</strong>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="detail-item">
+                    <span>Wild Amino Acid</span>
+                    <strong id="mdWild">—</strong>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="detail-item">
+                    <span>Mutant Amino Acid</span>
+                    <strong id="mdMutant">—</strong>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="detail-item">
+                    <span>Prediction Status</span>
+                    <strong><span id="mdPredBadge" class="status-badge neutral">—</span></strong>
+                  </div>
+                </div>
+              </div>
+              <div class="detail-item mt-3">
+                <span>Disease Association</span>
+                <strong id="mdDisease">—</strong>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-4 h-100" style="background:rgba(255,255,255,0.04);border-radius:18px;border:1px solid var(--line)">
+              <div class="subsection-heading mb-3">Stability Metrics</div>
+              <div class="row g-3 mb-3">
+                <div class="col-4">
+                  <div class="metric-box text-center">
+                    <span>&#916;&#916;G</span>
+                    <strong id="mdDeltaG">—</strong>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="metric-box text-center">
+                    <span>Confidence</span>
+                    <strong id="mdConfidence">—</strong>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="metric-box text-center">
+                    <span>Stability</span>
+                    <strong id="mdStabilityScore">—</strong>
+                  </div>
+                </div>
+              </div>
+              <div id="mutationMiniChartWrap" style="height:160px;position:relative">
+                <canvas id="mutationMiniChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <a class="btn btn-outline-light btn-sm" href="{{ url_for('stability_page') }}">
+          <i class="bi bi-bar-chart me-1"></i>View all stability data
+        </a>
+        <button type="button" class="btn btn-outline-light btn-sm" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

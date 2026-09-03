@@ -400,6 +400,7 @@ body::before {
 
 .chart-card {
   padding: 1.4rem;
+  overflow: visible;
 }
 
 .chart-title {
@@ -407,8 +408,21 @@ body::before {
   margin-bottom: 1rem;
 }
 
+.chart-wrap {
+  position: relative;
+  height: 260px;
+  width: 100%;
+}
+
+.chart-wrap canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
 .plotly-box {
   min-height: 280px;
+  width: 100%;
 }
 
 .summary-stack {
@@ -598,3 +612,148 @@ body::before {
     border-radius: 22px;
   }
 }
+
+/* ── NGL Viewer containers ──────────────────────────────────────── */
+#nglHeroViewer,
+#nglInlineViewer,
+#nglModalViewer,
+#nglDashboardViewer {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: radial-gradient(circle at 40% 40%, rgba(91,240,208,0.07), transparent 55%),
+              radial-gradient(circle at 75% 65%, rgba(168,85,247,0.07), transparent 50%),
+              rgba(255,255,255,0.035);
+  border: 1px solid var(--line);
+}
+
+/* Hero mini-viewer (index page) */
+.ngl-hero-box {
+  height: 280px;
+  width: 100%;
+}
+
+/* Inline viewer on protein page (right column) */
+.ngl-inline-box {
+  height: 320px;
+  width: 100%;
+}
+
+/* Full modal viewer */
+.ngl-modal-box {
+  height: 440px;
+  width: 100%;
+}
+
+/* Dashboard viewer */
+.ngl-dashboard-box {
+  height: 340px;
+  width: 100%;
+}
+
+/* Loading fallback inside NGL containers */
+.ngl-fallback,
+.ngl-loading-state {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+/* Hide fallback once NGL canvas appears */
+#nglHeroViewer canvas ~ .ngl-fallback,
+#nglInlineViewer canvas ~ .ngl-fallback,
+#nglModalViewer canvas ~ .ngl-loading-state,
+#nglDashboardViewer canvas ~ .ngl-fallback {
+  opacity: 0;
+}
+
+/* Make 3Dmol canvas fill the container exactly */
+#nglHeroViewer canvas,
+#nglInlineViewer canvas,
+#nglModalViewer canvas,
+#nglDashboardViewer canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  top: 0; left: 0;
+}
+
+/* 3Dmol also injects a div wrapper — make it fill too */
+#nglHeroViewer > div,
+#nglInlineViewer > div,
+#nglModalViewer > div,
+#nglDashboardViewer > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ── Mutation table row click hint ──────────────────────────────── */
+#mutationTableBody tr {
+  cursor: pointer;
+}
+
+#mutationTableBody tr:hover td {
+  background: rgba(91,240,208,0.04);
+}
+
+/* ── Mutation detail modal mini-chart ───────────────────────────── */
+#mutationMiniChartWrap {
+  height: 160px;
+  position: relative;
+}
+
+/* ── Stability page chart section ───────────────────────────────── */
+.stability-chart-section {
+  margin-bottom: 2rem;
+}
+
+.subsection-heading {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+/* ── Protein page link buttons ───────────────────────────────────── */
+.protein-image-card .btn-outline-light {
+  font-size: 0.85rem;
+}
+
+/* ── Modal controls bar ─────────────────────────────────────────── */
+.ngl-controls {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+/* ── Glass soft (light mode fix) ────────────────────────────────── */
+[data-bs-theme="light"] .glass-soft {
+  background: rgba(8,17,31,0.04);
+}
+
+[data-bs-theme="light"] #nglHeroViewer,
+[data-bs-theme="light"] #nglInlineViewer,
+[data-bs-theme="light"] #nglModalViewer,
+[data-bs-theme="light"] #nglDashboardViewer {
+  background: radial-gradient(circle at 40% 40%, rgba(91,240,208,0.09), transparent 55%),
+              rgba(8,17,31,0.03);
+}
+
+/* ── Responsive NGL adjustments ─────────────────────────────────── */
+@media (max-width: 767.98px) {
+  .ngl-hero-box { height: 220px; }
+  .ngl-inline-box { height: 240px; }
+  .ngl-modal-box { height: 300px; }
+  .ngl-dashboard-box { height: 240px; }
+}
+

@@ -9,6 +9,7 @@
     <div class="dashboard-meta">Live summary generated from local JSON and SQLite sources</div>
   </div>
 
+  <!-- Summary stat cards -->
   <div class="row g-4 mb-4">
     <div class="col-md-6 col-xl-3"><div class="glass-card stat-card"><div class="stat-label">Total Mutations</div><div class="stat-value" data-counter="{{ dashboard.summary.total_mutations }}">0</div></div></div>
     <div class="col-md-6 col-xl-3"><div class="glass-card stat-card"><div class="stat-label">Pathogenic Mutations</div><div class="stat-value" data-counter="{{ dashboard.summary.pathogenic_mutations }}">0</div></div></div>
@@ -16,6 +17,7 @@
     <div class="col-md-6 col-xl-3"><div class="glass-card stat-card"><div class="stat-label">Average Stability Score</div><div class="stat-value" data-counter="{{ dashboard.summary.average_stability_score }}">0</div></div></div>
   </div>
 
+  <!-- Dashboard data for charts -->
   <script id="dashboard-data" type="application/json">
     {{ dashboard | tojson }}
   </script>
@@ -31,18 +33,52 @@
     })();
   </script>
 
+  <!-- 3D HBB Structure Section -->
   <div class="row g-4 mb-4">
-    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h3 class="chart-title">Mutation Frequency</h3><canvas id="mutationFrequencyChart" height="240"></canvas></div></div>
-    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h3 class="chart-title">Mutation Distribution</h3><canvas id="mutationDistributionChart" height="240"></canvas></div></div>
-    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h3 class="chart-title">Protein Stability</h3><canvas id="stabilityChart" height="240"></canvas></div></div>
-    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h3 class="chart-title">Clinical Significance</h3><canvas id="clinicalChart" height="240"></canvas></div></div>
+    <div class="col-12">
+      <div class="glass-card p-4">
+        <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+          <div>
+            <div class="section-label">3D Molecular Structure</div>
+            <h3 class="chart-title mt-1 mb-0">HBB Protein &mdash; PDB {{ dashboard.protein.pdb_structure_id }}</h3>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <span class="pill">Deoxy-HbS crystal structure &middot; 2.05 Å</span>
+            <a class="btn btn-outline-light btn-sm" href="{{ url_for('protein_page') }}">
+              <i class="bi bi-box me-1"></i>Full viewer
+            </a>
+          </div>
+        </div>
+        <div id="nglDashboardViewer" class="ngl-dashboard-box" aria-label="HBB 3D molecular structure on dashboard">
+          <div class="ngl-fallback d-flex flex-column align-items-center justify-content-center h-100">
+            <div class="dna-loader mx-auto mb-3"></div>
+            <small class="text-uppercase letter-spacing" style="color:var(--text-muted)">Loading 3D structure…</small>
+          </div>
+        </div>
+        <div class="row g-3 mt-2">
+          <div class="col-6 col-md-3"><div class="mini-stat glass-soft"><span>Gene</span><strong>{{ dashboard.summary.gene_name }}</strong></div></div>
+          <div class="col-6 col-md-3"><div class="mini-stat glass-soft"><span>Protein</span><strong style="font-size:0.85rem">{{ dashboard.summary.protein_name }}</strong></div></div>
+          <div class="col-6 col-md-3"><div class="mini-stat glass-soft"><span>Pathogenic/Total</span><strong>{{ dashboard.summary.pathogenic_mutations }}/{{ dashboard.summary.total_mutations }}</strong></div></div>
+          <div class="col-6 col-md-3"><div class="mini-stat glass-soft"><span>Avg Stability</span><strong>{{ dashboard.summary.average_stability_score }}</strong></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts grid -->
+  <div class="row g-4 mb-4">
+    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h3 class="chart-title">Mutation Frequency</h3><div class="chart-wrap"><canvas id="mutationFrequencyChart"></canvas></div></div></div>
+    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h3 class="chart-title">Mutation Distribution</h3><div class="chart-wrap"><canvas id="mutationDistributionChart"></canvas></div></div></div>
+    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h3 class="chart-title">Protein Stability</h3><div class="chart-wrap"><canvas id="stabilityChart"></canvas></div></div></div>
+    <div class="col-lg-6"><div class="glass-card chart-card h-100"><h3 class="chart-title">Clinical Significance</h3><div class="chart-wrap"><canvas id="clinicalChart"></canvas></div></div></div>
   </div>
 
   <div class="row g-4 mb-4">
-    <div class="col-lg-7"><div class="glass-card chart-card h-100"><h3 class="chart-title">Heatmap</h3><div id="heatmapChart" class="plotly-box"></div></div></div>
-    <div class="col-lg-5"><div class="glass-card chart-card h-100"><h3 class="chart-title">Timeline</h3><div id="timelineChart" class="plotly-box"></div></div></div>
+    <div class="col-lg-7"><div class="glass-card chart-card h-100"><h3 class="chart-title">Stability Metrics Heatmap</h3><div id="heatmapChart" class="plotly-box"></div></div></div>
+    <div class="col-lg-5"><div class="glass-card chart-card h-100"><h3 class="chart-title">Stability Timeline</h3><div id="timelineChart" class="plotly-box"></div></div></div>
   </div>
 
+  <!-- Recent mutations + summary -->
   <div class="row g-4">
     <div class="col-lg-7">
       <div class="glass-card p-4 h-100">

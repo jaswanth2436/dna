@@ -25,59 +25,80 @@
       </div>
     </div>
     <div class="col-lg-5">
-      <div class="glass-card p-4 p-lg-5 h-100 protein-image-card">
+      <div class="glass-card p-3 p-lg-4 h-100 protein-image-card">
         <div class="d-flex align-items-center justify-content-between mb-3">
-          <span class="pill">Protein image</span>
+          <span class="pill">3D Structure &mdash; PDB {{ protein.pdb_structure_id }}</span>
           <span class="status-dot"></span>
         </div>
-        <svg viewBox="0 0 480 420" class="protein-svg" role="img" aria-label="Stylized protein structure illustration">
-          <defs>
-            <radialGradient id="proteinGlow" cx="50%" cy="50%" r="70%">
-              <stop offset="0%" stop-color="rgba(91,240,208,0.9)" />
-              <stop offset="55%" stop-color="rgba(123,140,255,0.75)" />
-              <stop offset="100%" stop-color="rgba(168,85,247,0.7)" />
-            </radialGradient>
-          </defs>
-          <rect x="30" y="30" width="420" height="360" rx="34" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.15)" />
-          <path d="M95 255 C150 120, 270 120, 325 255 S395 360, 405 210" fill="none" stroke="url(#proteinGlow)" stroke-width="18" stroke-linecap="round" />
-          <path d="M80 170 C145 270, 215 90, 300 210 S395 285, 410 165" fill="none" stroke="rgba(255,255,255,0.86)" stroke-width="12" stroke-linecap="round" />
-          <circle cx="155" cy="155" r="22" fill="#5bf0d0" fill-opacity="0.95" />
-          <circle cx="238" cy="228" r="28" fill="#7b8cff" fill-opacity="0.95" />
-          <circle cx="320" cy="160" r="20" fill="#a855f7" fill-opacity="0.95" />
-          <circle cx="367" cy="247" r="16" fill="#5bf0d0" fill-opacity="0.95" />
-          <text x="58" y="385" fill="rgba(255,255,255,0.75)" font-size="18">HBB protein render inspired by modern structural dashboards</text>
-        </svg>
-        <div class="d-grid mt-4">
-          <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#proteinModal">View 3D Protein</button>
+        <div id="nglInlineViewer" class="ngl-inline-box mb-3" aria-label="Interactive 3D view of HBB protein"></div>
+        <div class="d-grid mt-2">
+          <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#proteinModal">
+            <i class="bi bi-box me-2"></i>Open Full 3D Viewer
+          </button>
+        </div>
+        <div class="mt-3 d-flex gap-2 flex-wrap">
+          <a class="btn btn-outline-light btn-sm" href="https://www.uniprot.org/uniprot/{{ protein.uniprot_id }}" target="_blank" rel="noreferrer">
+            <i class="bi bi-box-arrow-up-right me-1"></i>UniProt
+          </a>
+          <a class="btn btn-outline-light btn-sm" href="https://www.rcsb.org/structure/{{ protein.pdb_structure_id }}" target="_blank" rel="noreferrer">
+            <i class="bi bi-box-arrow-up-right me-1"></i>RCSB PDB
+          </a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- 3D Viewer Modal -->
 <div class="modal fade" id="proteinModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl">
     <div class="modal-content glass-modal">
-      <div class="modal-header border-0">
-        <h5 class="modal-title">3D Protein View</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-header border-0 pb-0">
+        <div>
+          <h5 class="modal-title">3D Protein Viewer &mdash; HBB ({{ protein.pdb_structure_id }})</h5>
+          <p class="small mb-0" style="color:var(--text-muted)">Hemoglobin subunit beta &middot; Homo sapiens</p>
+        </div>
+        <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body pt-0">
-        <div class="row g-4 align-items-center">
-          <div class="col-lg-7">
-            <div class="modal-figure">
-              <div class="modal-figure-inner">
-                <div class="glow-orbit"></div>
-                <div class="modal-figure-label">PDB {{ protein.pdb_structure_id }}</div>
-                <p class="mb-0">Integrate an interactive molecular viewer such as Mol* or NGL here for live rotation, residue inspection, and annotation overlays.</p>
+      <div class="modal-body pt-3">
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <!-- NGL Viewer -->
+            <div id="nglModalViewer" class="ngl-modal-box" aria-label="Full 3D view of HBB protein PDB 1A3N">
+              <div class="ngl-loading-state d-flex flex-column align-items-center justify-content-center h-100">
+                <div class="dna-loader mx-auto mb-3"></div>
+                <div class="small text-uppercase letter-spacing" style="color:var(--text-muted)">Fetching PDB structure…</div>
               </div>
             </div>
+            <!-- Viewer Controls -->
+            <div class="d-flex gap-2 flex-wrap mt-3">
+              <button id="nglBtnCartoon" class="btn btn-sm btn-outline-light"><i class="bi bi-layers me-1"></i>Cartoon</button>
+              <button id="nglBtnSurface" class="btn btn-sm btn-outline-light"><i class="bi bi-globe me-1"></i>Surface</button>
+              <button id="nglBtnBall" class="btn btn-sm btn-outline-light"><i class="bi bi-circle-fill me-1"></i>Ball & Stick</button>
+              <button id="nglBtnSpin" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-clockwise me-1"></i>Spin</button>
+            </div>
           </div>
-          <div class="col-lg-5">
+          <div class="col-lg-4">
             <div class="detail-item mb-3"><span>Protein</span><strong>{{ protein.protein_name }}</strong></div>
             <div class="detail-item mb-3"><span>Gene</span><strong>{{ protein.gene_name }}</strong></div>
             <div class="detail-item mb-3"><span>UniProt</span><strong>{{ protein.uniprot_id }}</strong></div>
-            <a class="btn btn-outline-light w-100" href="https://www.rcsb.org/structure/{{ protein.pdb_structure_id }}" target="_blank" rel="noreferrer">Open RCSB Entry</a>
+            <div class="detail-item mb-3"><span>PDB ID</span><strong>{{ protein.pdb_structure_id }}</strong></div>
+            <div class="detail-item mb-3"><span>Length</span><strong>{{ protein.protein_length }} aa</strong></div>
+            <div class="detail-item mb-4"><span>Mol. Weight</span><strong>{{ protein.molecular_weight }} Da</strong></div>
+            <div class="d-grid gap-2">
+              <a class="btn btn-outline-light" href="https://www.rcsb.org/structure/{{ protein.pdb_structure_id }}" target="_blank" rel="noreferrer">
+                <i class="bi bi-box-arrow-up-right me-1"></i>Open in RCSB PDB
+              </a>
+              <a class="btn btn-outline-light" href="https://www.uniprot.org/uniprot/{{ protein.uniprot_id }}" target="_blank" rel="noreferrer">
+                <i class="bi bi-box-arrow-up-right me-1"></i>Open in UniProt
+              </a>
+            </div>
+            <div class="mt-4 p-3" style="background:rgba(255,255,255,0.04);border-radius:14px;border:1px solid var(--line)">
+              <div class="small" style="color:var(--text-muted)">
+                <strong style="color:var(--text)">About this structure</strong><br>
+                PDB 1A3N is the crystal structure of deoxy-HbS (E6V mutant) at 2.05 Å resolution — the structural basis for sickle-cell disease. Chains A/C = alpha-globin, B/D = beta-globin.
+              </div>
+            </div>
           </div>
         </div>
       </div>

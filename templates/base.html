@@ -13,6 +13,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.33.0/plotly.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="https://3dmol.org/build/3Dmol-min.js" defer></script>
 </head>
 <body class="app-shell" data-page="{{ request.endpoint or '' }}">
   <div id="pageLoader" class="page-loader" aria-hidden="true">
@@ -69,7 +70,7 @@
 
   <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer"></div>
 
-  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
   {% block scripts %}{% endblock %}
 </body>
 </html>

@@ -8,6 +8,25 @@
     </div>
     <div class="legend-pill">ΔΔG, confidence, and stability score overview</div>
   </div>
+
+  <!-- Stability Charts Row -->
+  <div class="row g-4 mb-5">
+    <div class="col-lg-6">
+      <div class="glass-card chart-card h-100">
+        <h3 class="chart-title">ΔΔG Values per Mutation</h3>
+        <div id="stabilityDeltaGChart" class="plotly-box"></div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="glass-card chart-card h-100">
+        <h3 class="chart-title">Confidence &amp; Stability Scores</h3>
+        <div id="stabilityCompChart" class="plotly-box"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stability cards -->
+  <div class="subsection-heading mb-3">Detailed mutation cards</div>
   <div class="row g-4">
     {% for item in stability %}
     <div class="col-md-6 col-xl-4">
@@ -30,10 +49,10 @@
           </div>
         </div>
         <div class="row g-3">
-          <div class="col-6"><div class="metric-box"><span>ΔΔG</span><strong>{{ item.delta_g }}</strong></div></div>
-          <div class="col-6"><div class="metric-box"><span>Stability Score</span><strong>{{ item.stability_score }}</strong></div></div>
+          <div class="col-6"><div class="metric-box"><span>ΔΔG</span><strong>{{ item.delta_g }} kcal/mol</strong></div></div>
+          <div class="col-6"><div class="metric-box"><span>Stability Score</span><strong>{{ item.stability_score }}/100</strong></div></div>
         </div>
-        <div class="progress mt-4">
+        <div class="progress mt-4" title="Stability score: {{ item.stability_score }}%">
           <div class="progress-bar {{ 'bg-danger' if item.prediction == 'Decrease Stability' else 'bg-success' if item.prediction == 'Increase Stability' else 'bg-info' }}" style="width: {{ item.stability_score }}%"></div>
         </div>
         <div class="small text-secondary mt-3">Reported on {{ item.reported_on }}</div>
@@ -42,4 +61,7 @@
     {% endfor %}
   </div>
 </section>
+
+<!-- Stability JSON for JS -->
+<script id="stability-data" type="application/json">{{ stability | tojson }}</script>
 {% endblock %}
